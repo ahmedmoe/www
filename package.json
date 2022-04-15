@@ -32,6 +32,8 @@
     "@sentry/nextjs": "^6.3.4",
     "@sentry/react": "^6.2.5",
     "@sentry/tracing": "^6.2.5",
+    "canvas": "^2.9.0",
+    "csv-parser": "^3.0.0",
     "fathom-client": "^3.0.0",
     "formik": "^2.2.6",
     "framer-motion": "^4.1.4",

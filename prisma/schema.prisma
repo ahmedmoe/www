@@ -29,6 +29,7 @@ model Story {
   viewCount      Int         @default(0)
   contentWarning Boolean     @default(false)
   mppMessageId   String?
+  upvotecount    Int         @default(0)
 
   @@index([postal, approved])
 }

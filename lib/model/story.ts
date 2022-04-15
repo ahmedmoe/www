@@ -14,6 +14,7 @@ export const SELECT = {
   viewCount: true,
   contentWarning: true,
   mppMessageId: true,
+  upvotecount: true,
 }
 
 export type Story = Prisma.StoryGetPayload<{ select: typeof SELECT }>
@@ -32,6 +33,7 @@ const BASE_TEST_STORY: Story = {
   viewCount: 0,
   contentWarning: false,
   mppMessageId: null,
+  upvotecount: 0,
 }
 
 export function testStory(overrides = {}): Story {

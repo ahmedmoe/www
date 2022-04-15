@@ -1,17 +1,44 @@
 import NextLink from 'next/link'
 import { Box, Link } from '@chakra-ui/react'
 import { list } from '../lib/api/stories'
-import StoryFeed from '../components/stories/StoryFeed'
+import { StoryFeed } from '../components/stories/StoryFeed'
 import FloatingRibbon, { Button } from '../components/common/FloatingRibbon'
 import SiteLayout from '../layouts/Default'
 import { Story } from '../lib/model/story'
 import HeadTags from '../components/common/HeadTags'
+import { useRouter } from 'next/router'
+
+
+// creating an array of city strings
+function extract_cities(stories: Story[]): string[] {
+  var cities = []
+  cities.push('All')
+  for (let i = 0; i < stories.length; i += 1) {
+    if (!cities.includes(stories[i].postalCode.name)) {
+      cities.push(stories[i].postalCode.name)
+    }
+  }
+  return cities
+}
 
 interface MainPageProps {
   stories: Story[]
 }
 
 const MainPage = ({ stories }: MainPageProps) => {
+  var cities = extract_cities(stories)
+  const router = useRouter()
+  const query = router.query
+  var filtering_city = 'All'
+  // filtering stories array to contain only stories with city name from url string
+  if (query.hasOwnProperty('Geolocation')) {
+    filtering_city = query['Geolocation'] as string
+    if (query['Geolocation'] != 'All') {
+      stories = stories.filter(story => story.postalCode.name === query['Geolocation'])
+    }
+  }
+
+
   return (
     <>
       <HeadTags>
@@ -19,7 +46,7 @@ const MainPage = ({ stories }: MainPageProps) => {
       </HeadTags>
 
       <Box>
-        <StoryFeed stories={stories} />
+        <StoryFeed stories={stories} cities={cities} filtering_by={filtering_city} />
       </Box>
 
       <FloatingRibbon>

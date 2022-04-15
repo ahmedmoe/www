@@ -1,24 +1,34 @@
-import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, Image, Center } from '@chakra-ui/react'
 import { Story } from '../../lib/model/story'
 import { categoryLabel, storyCategoryLabel, storyImage, storyCite } from './utils'
 import ContentBox from '../common/ContentBox'
 import Label, { ContentWarningLabel } from '../common/Label'
 import SimpleLink from '../common/SimpleLink'
+import StoryFilter from './StoryFilter'
+
+export { FeedHeader, StorySummary, StoryFeed, }
 
 function FeedHeader() {
   return (
-    <Box
-      bgImage="url('/img/landingpage-v2.jpg')"
-      bgSize="cover"
-      bgPosition="center 55%"
-      color="white"
-    >
-      <Box bg="rgba(0, 0, 0, 0.5)">
-        <ContentBox pt={[8, null, 14]} pb={[10, null, 32]}>
-          <Heading as="h1" fontSize={['2xl', null, '4xl', '5xl']} fontWeight={300}>
-            Amplifying the stories of the pandemic throughout Canada
-          </Heading>
-        </ContentBox>
+    <Box>
+      <Box
+        bgImage="url('/img/landingpage-v2.jpg')"
+        bgSize="cover"
+        bgPosition="center 55%"
+        color="white"
+      >
+        <Box bg="rgba(0, 0, 0, 0.5)">
+          <ContentBox pt={[8, null, 14]} pb={[10, null, 32]}>
+            <Heading as="h1" fontSize={['2xl', null, '4xl', '5xl']} fontWeight={300}>
+              Amplifying the stories of the pandemic throughout Canada
+            </Heading>
+          </ContentBox>
+        </Box>
+      </Box>
+      <Box h='40vh' w='100vw'>
+        <Center border={"hidden"}>
+          <Image src={"/canadamap_mainpage.png"} width={"50vw"} pt={3} border="hidden" />
+        </Center>
       </Box>
     </Box>
   )
@@ -77,9 +87,11 @@ function StorySummary({ story }: StorySummaryProps) {
 
 interface StoryFeedProps {
   stories: Story[]
+  cities: string[]
+  filtering_by: string
 }
 
-export default function StoryFeed({ stories }: StoryFeedProps) {
+function StoryFeed({ stories, cities, filtering_by }: StoryFeedProps) {
   return (
     <Box>
       <FeedHeader />
@@ -87,6 +99,9 @@ export default function StoryFeed({ stories }: StoryFeedProps) {
         <Heading as="h2" mb={[6, null, 8]} color="primary.100">
           Stories
         </Heading>
+
+        <StoryFilter cities={cities} filter_status={filtering_by} />
+
         <SimpleGrid
           as="main"
           columns={[1, null, 2]}
